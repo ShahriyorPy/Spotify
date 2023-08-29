@@ -15,11 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from rest_framework.routers import DefaultRouter
 
 from asosiy.views import *
+
+router = DefaultRouter()
+router.register("albomlar_set",AlbomModelViewSet)
+router.register("qoshiqlar_set",QoshiqModelViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
     path('qoshiqchilar/', QoshiqchilarAPIView.as_view()),
     path('albomlar/',AlbomlarAPIView.as_view()),
     path('qoshiqlar/',QoshiqlarAPIView.as_view()),
